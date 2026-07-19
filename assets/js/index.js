@@ -20,8 +20,8 @@ window.addEventListener("scroll", function () {
     }
   }
 });
-//--------------------------------------------------
-// scroll to top
+/*--------------------------------------------------*/
+/*-- scroll to top --*/
 var heroSection = document.querySelector("#hero-section");
 var scrollToTopBtn = document.querySelector("#scroll-to-top");
 window.addEventListener("scroll", function () {
@@ -34,15 +34,15 @@ window.addEventListener("scroll", function () {
 scrollToTopBtn.addEventListener("click", function () {
   window.scrollTo({ top: 0 });
 });
-//--------------------------------------------------
-// dark & light mode
+/*--------------------------------------------------*/
+/*-- dark & light mode --*/
 var html = document.querySelector("html");
-var themeToggleBtn = document.querySelector("#theme-toggle-button");
+var toggleButton = document.querySelector("#theme-toggle-button");
 var savedTheme = localStorage.getItem("mode");
 if (savedTheme) {
   html.classList.toggle("dark", savedTheme === "dark");
 }
-themeToggleBtn.addEventListener("click", function () {
+toggleButton.addEventListener("click", function () {
   if (html.classList.contains("dark")) {
     html.classList.remove("dark");
     html.classList.add("light");
@@ -53,8 +53,8 @@ themeToggleBtn.addEventListener("click", function () {
     localStorage.setItem("mode", "dark");
   }
 });
-//--------------------------------------------------
-// portfolio tabs
+/*--------------------------------------------------*/
+/*-- portfolio tabs --*/
 var bfilter = document.querySelectorAll(".portfolio-filter");
 var items = document.querySelectorAll(".portfolio-item");
 for (var i = 0; i < bfilter.length; i++) {
@@ -133,8 +133,8 @@ for (var i = 0; i < bfilter.length; i++) {
     }, 300);
   });
 }
-//--------------------------------------------------
-// testimonials carousel
+/*--------------------------------------------------*/
+/*-- testimonials carousel --*/
 var testCarousel = document.querySelector("#testimonials-carousel");
 var Cards = document.querySelectorAll(".testimonial-card");
 var indicators = document.querySelectorAll(".carousel-indicator");
@@ -161,7 +161,6 @@ function moveLR() {
   }
   var move = place * (100 / cardsP);
   testCarousel.style.transform = "translateX(" + move + "%)";
-
   for (var i = 0; i < indicators.length; i++) {
     indicators[i].classList.remove("active", "bg-accent", "scale-125");
     indicators[i].classList.add("bg-slate-400", "dark:bg-slate-600");
@@ -199,104 +198,82 @@ window.addEventListener("resize", function () {
   moveLR();
 });
 moveLR();
-//--------------------------------------------------
-// settings sidebar colors & fonts
+/*--------------------------------------------------*/
+/*-- settings sidebar colors & fonts --*/
 var settingsToggle = document.querySelector("#settings-toggle");
 var settingsSidebar = document.querySelector("#settings-sidebar");
 var closeSettings = document.querySelector("#close-settings");
 var fontOption = document.querySelectorAll(".font-option");
+/*-------------------- Fonts --------------------*/
+function activeFont(font) {
+  for (var i = 0; i < fontOption.length; i++) {
+    fontOption[i].classList.remove(
+      "active",
+      "border-primary",
+      "bg-slate-50",
+      "dark:bg-slate-800"
+    );
+    fontOption[i].classList.add(
+      "border-slate-200",
+      "dark:border-slate-700"
+    );
+    if (fontOption[i].getAttribute("data-font") == font) {
+      fontOption[i].classList.add(
+        "active",
+        "border-primary",
+        "bg-slate-50",
+        "dark:bg-slate-800"
+      );
+      fontOption[i].classList.remove(
+        "border-slate-200",
+        "dark:border-slate-700"
+      );
+    }
+  }
+}
 var savedFont = localStorage.getItem("font");
 if (savedFont) {
   document.body.classList.remove(
     "font-tajawal",
     "font-cairo",
-    "font-alexandria",
+    "font-alexandria"
   );
   document.body.classList.add("font-" + savedFont);
-  for (var i = 0; i < fontOption.length; i++) {
-    if (fontOption[i].getAttribute("data-font") == savedFont) {
-      fontOption[i].classList.add("active");
-    }
-  }
+  activeFont(savedFont);
+} else {
+  activeFont("tajawal");
 }
 for (var i = 0; i < fontOption.length; i++) {
   fontOption[i].addEventListener("click", function () {
-    for (var j = 0; j < fontOption.length; j++) {
-      fontOption[j].classList.remove(
-        "active",
-        "border-primary",
-        "bg-slate-50",
-        "dark:bg-slate-800",
-      );
-      fontOption[j].classList.add("border-slate-200", "dark:border-slate-700");
-    }
-    this.classList.add(
-      "active",
-      "border-primary",
-      "bg-slate-50",
-      "dark:bg-slate-800",
-    );
-    this.classList.remove("border-slate-200", "dark:border-slate-700");
     var font = this.getAttribute("data-font");
+    activeFont(font);
     document.body.classList.remove(
       "font-tajawal",
       "font-cairo",
-      "font-alexandria",
+      "font-alexandria"
     );
     document.body.classList.add("font-" + font);
     localStorage.setItem("font", font);
   });
 }
-// -------------------- Theme Colors --------------------
+/*-------------------- Theme Colors --------------------*/
 var themeGrid = document.querySelector("#theme-colors-grid");
 var colors = [
-  {
-    primary: "#6366f1",
-    secondary: "#8b5cf6",
-    accent: "#a855f7",
-  },
-  {
-    primary: "#ec4899",
-    secondary: "#f97316",
-    accent: "#fb923c",
-  },
-  {
-    primary: "#10b981",
-    secondary: "#059669",
-    accent: "#34d399",
-  },
-  {
-    primary: "#3b82f6",
-    secondary: "#06b6d4",
-    accent: "#22d3ee",
-  },
-  {
-    primary: "#ef4444",
-    secondary: "#f43f5e",
-    accent: "#fb7185",
-  },
-  {
-    primary: "#f59e0b",
-    secondary: "#ea580c",
-    accent: "#fbbf24",
-  },
-  {
-    primary: "#0b51f5",
-    secondary: "#0c1bea",
-    accent: "#244ffb",
-  },
-  {
-    primary: "#f50b9b",
-    secondary: "#ea0cd4",
-    accent: "#fb24b0",
-  },
+  { primary: "#6366f1", secondary: "#8b5cf6", accent: "#a855f7" },
+  { primary: "#ec4899", secondary: "#f97316", accent: "#fb923c" },
+  { primary: "#10b981", secondary: "#059669", accent: "#34d399" },
+  { primary: "#3b82f6", secondary: "#06b6d4", accent: "#22d3ee" },
+  { primary: "#ef4444", secondary: "#f43f5e", accent: "#fb7185" },
+  { primary: "#f59e0b", secondary: "#ea580c", accent: "#fbbf24" },
+  { primary: "#0b51f5", secondary: "#0c1bea", accent: "#244ffb" },
+  { primary: "#f50b9b", secondary: "#ea0cd4", accent: "#fb24b0" }
 ];
 function changeTheme(primary, secondary, accent) {
   document.documentElement.style.setProperty("--color-primary", primary);
   document.documentElement.style.setProperty("--color-secondary", secondary);
   document.documentElement.style.setProperty("--color-accent", accent);
 }
-// make buttons color
+/*-- make buttons color --*/
 for (var i = 0; i < colors.length; i++) {
   var btn = document.createElement("button");
   btn.className =
@@ -318,7 +295,7 @@ function activeColor(index) {
       "ring-primary",
       "ring-offset-2",
       "ring-offset-white",
-      "dark:ring-offset-slate-900",
+      "dark:ring-offset-slate-900"
     );
   }
   colorBtns[index].classList.add(
@@ -326,23 +303,23 @@ function activeColor(index) {
     "ring-primary",
     "ring-offset-2",
     "ring-offset-white",
-    "dark:ring-offset-slate-900",
+    "dark:ring-offset-slate-900"
   );
 }
-// click in the color
+/*-- click color --*/
 for (var i = 0; i < colorBtns.length; i++) {
   colorBtns[i].addEventListener("click", function () {
     var index = this.getAttribute("data-index");
     changeTheme(
       colors[index].primary,
       colors[index].secondary,
-      colors[index].accent,
+      colors[index].accent
     );
     activeColor(index);
     localStorage.setItem("theme", JSON.stringify(colors[index]));
   });
 }
-// load colors
+/*-- load color --*/
 var savedTheme = localStorage.getItem("theme");
 if (savedTheme) {
   var theme = JSON.parse(savedTheme);
@@ -355,8 +332,10 @@ if (savedTheme) {
       activeColor(i);
     }
   }
+} else {
+  activeColor(0);
 }
-// -------------------- Sidebar --------------------
+/*-------------------- Sidebar --------------------*/
 function moveButton() {
   if (window.innerWidth <= 640) {
     settingsToggle.style.right = "240px";
@@ -386,47 +365,24 @@ window.addEventListener("resize", function () {
     moveButton();
   }
 });
-// -------------------- Reset --------------------
+/*-------------------- Reset --------------------*/
 var resetBtn = document.querySelector("#reset-settings");
 resetBtn.addEventListener("click", function () {
-  // delete in local storage
   localStorage.removeItem("font");
   localStorage.removeItem("theme");
-  // reset font
   document.body.classList.remove(
     "font-cairo",
     "font-alexandria",
-    "font-tajawal",
+    "font-tajawal"
   );
   document.body.classList.add("font-tajawal");
-  // remove active from all
-  for (var i = 0; i < fontOption.length; i++) {
-    fontOption[i].classList.remove(
-      "active",
-      "border-primary",
-      "bg-slate-50",
-      "dark:bg-slate-800",
-    );
-    fontOption[i].classList.add("border-slate-200", "dark:border-slate-700");
-    if (fontOption[i].getAttribute("data-font") == "tajawal") {
-      fontOption[i].classList.add(
-        "active",
-        "border-primary",
-        "bg-slate-50",
-        "dark:bg-slate-800",
-      );
-      fontOption[i].classList.remove(
-        "border-slate-200",
-        "dark:border-slate-700",
-      );
-    }
-  }
-  // reset color
-  changeTheme(colors[0].primary, colors[0].secondary, colors[0].accent);
+  activeFont("tajawal");
+  changeTheme(
+    colors[0].primary,
+    colors[0].secondary,
+    colors[0].accent
+  );
   activeColor(0);
-  // close Sidebar
   settingsSidebar.classList.add("translate-x-full");
-  // reset Settings
   settingsToggle.style.right = "0";
 });
-//--------------------------------------------------
