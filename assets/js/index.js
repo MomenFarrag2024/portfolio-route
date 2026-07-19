@@ -55,13 +55,13 @@ toggleButton.addEventListener("click", function () {
 });
 /*--------------------------------------------------*/
 /*-- portfolio tabs --*/
-var bfilter = document.querySelectorAll(".portfolio-filter");
+var pfilter = document.querySelectorAll(".portfolio-filter");
 var items = document.querySelectorAll(".portfolio-item");
-for (var i = 0; i < bfilter.length; i++) {
-  bfilter[i].addEventListener("click", function () {
+for (var i = 0; i < pfilter.length; i++) {
+  pfilter[i].addEventListener("click", function () {
     var filter = this.getAttribute("data-filter");
-    for (var j = 0; j < bfilter.length; j++) {
-      bfilter[j].classList.remove(
+    for (var j = 0; j < pfilter.length; j++) {
+      pfilter[j].classList.remove(
         "active",
         "bg-linear-to-r",
         "from-primary",
@@ -70,7 +70,7 @@ for (var i = 0; i < bfilter.length; i++) {
         "hover:shadow-lg",
         "hover:shadow-primary/50",
       );
-      bfilter[j].classList.add(
+      pfilter[j].classList.add(
         "bg-white",
         "dark:bg-slate-800",
         "text-slate-600",
@@ -204,6 +204,18 @@ var settingsToggle = document.querySelector("#settings-toggle");
 var settingsSidebar = document.querySelector("#settings-sidebar");
 var closeSettings = document.querySelector("#close-settings");
 var fontOption = document.querySelectorAll(".font-option");
+var themeGrid = document.querySelector("#theme-colors-grid");
+var colors = [
+  { primary: "#6366f1", secondary: "#8b5cf6", accent: "#a855f7" },
+  { primary: "#ec4899", secondary: "#f97316", accent: "#fb923c" },
+  { primary: "#10b981", secondary: "#059669", accent: "#34d399" },
+  { primary: "#3b82f6", secondary: "#06b6d4", accent: "#22d3ee" },
+  { primary: "#ef4444", secondary: "#f43f5e", accent: "#fb7185" },
+  { primary: "#f59e0b", secondary: "#ea580c", accent: "#fbbf24" },
+  { primary: "#0b51f5", secondary: "#0c1bea", accent: "#244ffb" },
+  { primary: "#f50b9b", secondary: "#ea0cd4", accent: "#fb24b0" },
+];
+var resetBtn = document.querySelector("#reset-settings");
 /*-------------------- Fonts --------------------*/
 function activeFont(font) {
   for (var i = 0; i < fontOption.length; i++) {
@@ -211,22 +223,19 @@ function activeFont(font) {
       "active",
       "border-primary",
       "bg-slate-50",
-      "dark:bg-slate-800"
+      "dark:bg-slate-800",
     );
-    fontOption[i].classList.add(
-      "border-slate-200",
-      "dark:border-slate-700"
-    );
+    fontOption[i].classList.add("border-slate-200", "dark:border-slate-700");
     if (fontOption[i].getAttribute("data-font") == font) {
       fontOption[i].classList.add(
         "active",
         "border-primary",
         "bg-slate-50",
-        "dark:bg-slate-800"
+        "dark:bg-slate-800",
       );
       fontOption[i].classList.remove(
         "border-slate-200",
-        "dark:border-slate-700"
+        "dark:border-slate-700",
       );
     }
   }
@@ -236,7 +245,7 @@ if (savedFont) {
   document.body.classList.remove(
     "font-tajawal",
     "font-cairo",
-    "font-alexandria"
+    "font-alexandria",
   );
   document.body.classList.add("font-" + savedFont);
   activeFont(savedFont);
@@ -250,24 +259,13 @@ for (var i = 0; i < fontOption.length; i++) {
     document.body.classList.remove(
       "font-tajawal",
       "font-cairo",
-      "font-alexandria"
+      "font-alexandria",
     );
     document.body.classList.add("font-" + font);
     localStorage.setItem("font", font);
   });
 }
 /*-------------------- Theme Colors --------------------*/
-var themeGrid = document.querySelector("#theme-colors-grid");
-var colors = [
-  { primary: "#6366f1", secondary: "#8b5cf6", accent: "#a855f7" },
-  { primary: "#ec4899", secondary: "#f97316", accent: "#fb923c" },
-  { primary: "#10b981", secondary: "#059669", accent: "#34d399" },
-  { primary: "#3b82f6", secondary: "#06b6d4", accent: "#22d3ee" },
-  { primary: "#ef4444", secondary: "#f43f5e", accent: "#fb7185" },
-  { primary: "#f59e0b", secondary: "#ea580c", accent: "#fbbf24" },
-  { primary: "#0b51f5", secondary: "#0c1bea", accent: "#244ffb" },
-  { primary: "#f50b9b", secondary: "#ea0cd4", accent: "#fb24b0" }
-];
 function changeTheme(primary, secondary, accent) {
   document.documentElement.style.setProperty("--color-primary", primary);
   document.documentElement.style.setProperty("--color-secondary", secondary);
@@ -295,7 +293,7 @@ function activeColor(index) {
       "ring-primary",
       "ring-offset-2",
       "ring-offset-white",
-      "dark:ring-offset-slate-900"
+      "dark:ring-offset-slate-900",
     );
   }
   colorBtns[index].classList.add(
@@ -303,7 +301,7 @@ function activeColor(index) {
     "ring-primary",
     "ring-offset-2",
     "ring-offset-white",
-    "dark:ring-offset-slate-900"
+    "dark:ring-offset-slate-900",
   );
 }
 /*-- click color --*/
@@ -313,7 +311,7 @@ for (var i = 0; i < colorBtns.length; i++) {
     changeTheme(
       colors[index].primary,
       colors[index].secondary,
-      colors[index].accent
+      colors[index].accent,
     );
     activeColor(index);
     localStorage.setItem("theme", JSON.stringify(colors[index]));
@@ -366,22 +364,17 @@ window.addEventListener("resize", function () {
   }
 });
 /*-------------------- Reset --------------------*/
-var resetBtn = document.querySelector("#reset-settings");
 resetBtn.addEventListener("click", function () {
   localStorage.removeItem("font");
   localStorage.removeItem("theme");
   document.body.classList.remove(
     "font-cairo",
     "font-alexandria",
-    "font-tajawal"
+    "font-tajawal",
   );
   document.body.classList.add("font-tajawal");
   activeFont("tajawal");
-  changeTheme(
-    colors[0].primary,
-    colors[0].secondary,
-    colors[0].accent
-  );
+  changeTheme(colors[0].primary, colors[0].secondary, colors[0].accent);
   activeColor(0);
   settingsSidebar.classList.add("translate-x-full");
   settingsToggle.style.right = "0";
